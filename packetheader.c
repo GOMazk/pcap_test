@@ -7,6 +7,7 @@ int analyze_packet(u_char* packet)
 	memncpy(eth_h,packet,sizeof(eth_h));
 	print_eth(eth_h);
 		
+	return 0;
 }
 
 short int print_eth(Ethnet_header eth)
