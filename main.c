@@ -1,12 +1,7 @@
 #include <pcap.h>
 #include <stdio.h>
+#inlcude "packetheader.h"
 
-typedef struct ethnet_header{
-}
-typedef struct ip_header{
-}
-typedef struct tcp_header{
-}
 
 int main(int argc, char *argv[])
 {
