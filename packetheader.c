@@ -20,10 +20,10 @@ int analyze_packet( void* header )
 	struct Tcp_header tcp_h;
 	
 	memcpy(&eth_h,header,sizeof(eth_h));
-	print_eth(&eth_h);
+//	print_eth(&eth_h);
 	
 	char IPv4[]={0x08,0x00};
-	if( memcmp(eth_h.type,IPv4,2) ){
+	if( !memcmp(eth_h.type,IPv4,2) ){
 		printf("It\'s IPv4");
 	}
 		

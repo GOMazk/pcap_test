@@ -43,11 +43,14 @@ int main(int argc, char *argv[])
 		return(2);
 	}
 	
-	/* Grab a packet */
-	packet = pcap_next(handle, &header);
-	/* Print its length */
-	printf("Jacked a packet with length of [%d]\n", header.len);
-	analyze_packet(&header);
+	while(1){
+		/* Grab a packet */
+		packet = pcap_next(handle, &header);
+		/* Print its length */
+		printf("Jacked a packet with length of [%d]\n", header.len);
+		analyze_packet(&header);
+	}
+	
 	
 	/* And close the session */
 	pcap_close(handle);	
