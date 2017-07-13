@@ -1,8 +1,8 @@
-int analyze_packet(u_char* packet)
+int analyze_packet(char* packet)
 {
-	Ethnet_header eth_h;
-	Ip_header ip_h;
-	Tcp_header tcp_h;
+	struct Ethnet_header eth_h;
+	struct Ip_header ip_h;
+	struct Tcp_header tcp_h;
 	
 	memncpy(eth_h,packet,sizeof(eth_h));
 	print_eth(eth_h);
@@ -10,7 +10,7 @@ int analyze_packet(u_char* packet)
 	return 0;
 }
 
-short int print_eth(Ethnet_header eth)
+short int print_eth(struct Ethnet_header eth)
 {
 	printf("dst MAC: ");
 	for(int i=0;i<6;i++){
@@ -26,12 +26,12 @@ short int print_eth(Ethnet_header eth)
 	return eth.type;
 }
 
-char print_Ip(Ip_header iph)
+char print_Ip(struct Ip_header iph)
 {
 	return 0;
 }
 
-int print_Tcp(Tcp_header tcph)
+int print_Tcp(struct Tcp_header tcph)
 {
 	return 0;
 }

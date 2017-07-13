@@ -1,6 +1,6 @@
 #include <pcap.h>
 #include <stdio.h>
-#inlcude "packetheader.h"
+#include "packetheader.h"
 
 
 int main(int argc, char *argv[])
@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 	
 	while(1){
 		/* Grab a packet */
-		packet = pcap_next_ex(handle, &header);
+		packet = pcap_next(handle, &header);
 		/* Print its length */
 		printf("Jacked a packet with length of [%d]\n", header.len);
 	}	
