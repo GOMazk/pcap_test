@@ -22,7 +22,8 @@ int analyze_packet( void* header )
 	memcpy(&eth_h,header,sizeof(eth_h));
 	print_eth(&eth_h);
 	
-	if( memcmp(eth_h.type,{0x08,0x00},2) ){
+	char IPv4[]={0x08,0x00};
+	if( memcmp(eth_h.type,IPv4,2) ){
 		printf("It\'s IPv4");
 	}
 		
