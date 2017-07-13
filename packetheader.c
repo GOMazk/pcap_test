@@ -2,7 +2,7 @@
 struct Ethnet_header{
 	unsigned char dstMac[6];
 	unsigned char srcMac[6];
-	unsigned short int type;
+	unsigned char type[2];
 };
 
 struct Ip_header{
@@ -22,7 +22,7 @@ int analyze_packet( void* header )
 	memcpy(&eth_h,header,sizeof(eth_h));
 	print_eth(&eth_h);
 	
-	if(eth_h.type==0x0800){
+	if( memcmp(eth_h.type,{0x08,0x00},2) ){
 		printf("It\'s IPv4");
 	}
 		
