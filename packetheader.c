@@ -36,18 +36,15 @@ int analyze_packet( char* packet )
 {
 	struct Ethnet_header* eth_hp;
 	struct Ip4_header* ip4_hp;
-	struct Tcp_header* tcp_hp;
-	
+	struct Tcp_header* tcp_hp;	
+
 	eth_hp = packet;
-	
 	char IPv4[]={0x08,0x00};
 	if( !memcmp(eth_hp->type,IPv4,2) ){
-		ip4_hp = eth_hp + sizeof(struct Ethnet_header);
-
-		printf("%d\n",ip4_hp->protocol);
+		ip4_hp = packet+sizeof(*eth_hp);
 		if( ip4_hp->protocol == 6 ){
 			printf("It\'s TCP\n");
-			tcp_hp = ip4_hp + sizeof(struct Ip4_header);
+			tcp_hp = packet+sizeof(*eth_hp)+sizeof(*ip4_hp);
 
 			print_eth(eth_hp);			
 			print_Ip4(ip4_hp);
@@ -55,6 +52,7 @@ int analyze_packet( char* packet )
 		}
 		
 	}
+//	printf("%x,%x,%x,%x",packet,eth_hp,ip4_hp,tcp_hp);
 		
 	return 0;
 }
@@ -95,3 +93,4 @@ int print_Tcp(struct Tcp_header* tcph)
 	printf("dst port: %d\n",tcph_.dst_port);
 	return 0;
 }
+

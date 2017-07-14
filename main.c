@@ -42,17 +42,20 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Couldn't install filter %s: %s\n", filter_exp, pcap_geterr(handle));
 		return(2);
 	}
-	
+
+	printf("start\n");
 	while(1){
 		/* Grab a packet */
 		pcap_next_ex(handle,&header,&packet);
 		/* Print its length */
-		//printf("Jacked a packet with length of [%d]\n", (*header).len);
-		if((*header).len != 0) analyze_packet(packet);
+		//printf("Jacked a packet with length of [%d]\n", (*header).len);	
+		if((*header).len != 0){
+			analyze_packet(packet);
+		}
 	}
 	
 	
 	/* And close the session */
-	pcap_close(handle);	
+	pcap_close(handle);
 	return(0);
 }
