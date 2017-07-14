@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 		/* Grab a packet */
 		pcap_next_ex(handle,&header,&packet);
 		/* Print its length */
-		printf("Jacked a packet with length of [%d]\n", (*header).len);
+		//printf("Jacked a packet with length of [%d]\n", (*header).len);
 		if((*header).len != 0) analyze_packet(packet);
 	}
 	
