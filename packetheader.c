@@ -13,18 +13,17 @@ struct Tcp_header{
 	
 };
 
-int analyze_packet( void* header )
+int analyze_packet( char* packet )
 {
-	struct Ethnet_header eth_h;
+	struct Ethnet_header* eth_hp;
 	struct Ip_header ip_h;
 	struct Tcp_header tcp_h;
 	
-	memcpy(&eth_h,header,sizeof(eth_h));
-//	print_eth(&eth_h);
-	
+	eth_hp = packet;
+	print_eth(eth_hp);	
 	char IPv4[]={0x08,0x00};
-	if( !memcmp(eth_h.type,IPv4,2) ){
-		printf("It\'s IPv4");
+	if( !memcmp(eth_hp->type,IPv4,2) ){
+		printf("It\'s IPv4\n");
 	}
 		
 	return 0;
@@ -33,7 +32,7 @@ int analyze_packet( void* header )
 int print_eth(struct Ethnet_header* eth)
 {
 	struct Ethnet_header eth_;
-	memcpy(&eth_,&eth,sizeof(eth_));
+	memcpy(&eth_,eth,sizeof(eth_));
 	printf("dst MAC: ");
 	printf("%02X:%02X:%02X:%02X:%02X:%02X\n",eth_.dstMac[0],eth_.dstMac[1],eth_.dstMac[2],eth_.dstMac[3],eth_.dstMac[4],eth_.dstMac[5]);	
 
