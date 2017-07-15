@@ -16,6 +16,7 @@ struct Ip4_header{
 	unsigned short int checksum;
 	unsigned int src;
 	unsigned int dst;
+	unsigned char opt[40];
 	//+options
 };
 
@@ -44,7 +45,7 @@ int analyze_packet( char* packet )
 		ip4_hp = packet+sizeof(*eth_hp);
 		if( ip4_hp->protocol == 6 ){
 			printf("It\'s TCP\n");
-			tcp_hp = packet+sizeof(*eth_hp)+sizeof(*ip4_hp);
+			tcp_hp = packet+sizeof(*eth_hp)+((ip4_hp->ver_len)%16)*4;
 
 			print_eth(eth_hp);			
 			print_Ip4(ip4_hp);
@@ -52,7 +53,7 @@ int analyze_packet( char* packet )
 		}
 		
 	}
-//	printf("%x,%x,%x,%x",packet,eth_hp,ip4_hp,tcp_hp);
+	//printf("%x,%x,%x,%d,%x",packet,eth_hp,ip4_hp,((ip4_hp->ver_len)%16),tcp_hp);
 		
 	return 0;
 }
@@ -77,10 +78,10 @@ int print_Ip4(struct Ip4_header* iph)
 	memcpy(&iph_,iph,sizeof(iph_));
 
 	printf("src IP: ");
-	printf("%d.%d.%d.%d\n",iph_.src>>24,iph_.src<<8>>24,iph_.src<<16>>24,iph_.src<<24>>24);
+	printf("%d.%d.%d.%d\n",iph_.src<<24>>24,iph_.src<<16>>24,iph_.src<<8>>24,iph_.src>>24);
 
 	printf("dst IP: ");
-	printf("%d.%d.%d.%d\n",iph_.dst>>24,iph_.dst<<8>>24,iph_.dst<<16>>24,iph_.dst<<24>>24);
+	printf("%d.%d.%d.%d\n",iph_.dst<<24>>24,iph_.dst<<16>>24,iph_.dst<<8>>24,iph_.dst>>24);
 
 	return 0;
 }
