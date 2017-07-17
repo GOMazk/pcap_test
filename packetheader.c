@@ -8,7 +8,7 @@ struct Ethnet_header{
 struct Ip4_header{
 	unsigned char ver_len;
 	unsigned char type;
-	unsigned short int total_length;
+	unsigned char total_length[2];
 	unsigned short int id;
 	unsigned short int flag_frag;
 	unsigned char TTL;
@@ -17,7 +17,6 @@ struct Ip4_header{
 	unsigned int src;
 	unsigned int dst;
 	unsigned char opt[40];
-	//+options
 };
 
 struct Tcp_header{
@@ -30,14 +29,18 @@ struct Tcp_header{
 	unsigned short int window;
 	unsigned short int checksum;
 	unsigned short int urgp;
-	//+options
+	unsigned char opt[40];
 };
 
 int analyze_packet( char* packet )
 {
 	struct Ethnet_header* eth_hp;
 	struct Ip4_header* ip4_hp;
-	struct Tcp_header* tcp_hp;	
+	struct Tcp_header* tcp_hp;
+	char* data;
+	unsigned int data_size;
+	unsigned int i;
+
 
 	eth_hp = packet;
 	char IPv4[]={0x08,0x00};
@@ -50,6 +53,15 @@ int analyze_packet( char* packet )
 			print_eth(eth_hp);			
 			print_Ip4(ip4_hp);
 			print_Tcp(tcp_hp);
+			
+			data = packet + sizeof(*eth_hp)+((ip4_hp->ver_len)%16)*4+((tcp_hp->offset)>>4)*4;
+			data_size = ip4_hp->total_length[0]*256+ip4_hp->total_length[1] - ((ip4_hp->ver_len)%16)*4+((tcp_hp->offset)>>4)*4;
+			printf("data size(except header): %d\n",data_size);
+			for(i=0;i<data_size;i++){
+				printf("%02X ",(unsigned char)*(data+i));
+			}
+			printf("\n");
+			
 		}
 		
 	}
