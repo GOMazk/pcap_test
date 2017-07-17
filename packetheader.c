@@ -21,8 +21,8 @@ struct Ip4_header{
 };
 
 struct Tcp_header{
-	unsigned short int src_port;
-	unsigned short int dst_port;
+	unsigned char src_port[2];
+	unsigned char dst_port[2];
 	unsigned int sequence;
 	unsigned int ack;
 	unsigned char offset;
@@ -90,8 +90,8 @@ int print_Tcp(struct Tcp_header* tcph)
 {
 	struct Tcp_header tcph_;
 	memcpy(&tcph_,tcph,sizeof(&tcph_));
-	printf("src port: %d\n",tcph_.src_port);
-	printf("dst port: %d\n",tcph_.dst_port);
+	printf("src port: %d\n",tcph_.src_port[0]*256 + tcph_.src_port[1]);
+	printf("dst port: %d\n",tcph_.dst_port[0]*256 + tcph_.dst_port[1]);
 	return 0;
 }
 
