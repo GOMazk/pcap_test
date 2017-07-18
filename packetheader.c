@@ -72,38 +72,30 @@ int analyze_packet( char* packet )
 
 int print_eth(struct Ethnet_header* eth)
 {
-	struct Ethnet_header eth_;
-	memcpy(&eth_,eth,sizeof(eth_));
-
 	printf("dst MAC: ");
-	printf("%02X:%02X:%02X:%02X:%02X:%02X\n",eth_.dstMac[0],eth_.dstMac[1],eth_.dstMac[2],eth_.dstMac[3],eth_.dstMac[4],eth_.dstMac[5]);	
+	printf("%02X:%02X:%02X:%02X:%02X:%02X\n",(*eth).dstMac[0],(*eth).dstMac[1],(*eth).dstMac[2],(*eth).dstMac[3],(*eth).dstMac[4],(*eth).dstMac[5]);	
 
 	printf("src MAC: ");
-	printf("%02X:%02X:%02X:%02X:%02X:%02X\n",eth_.srcMac[0],eth_.srcMac[1],eth_.srcMac[2],eth_.srcMac[3],eth_.srcMac[4],eth_.srcMac[5]);	
+	printf("%02X:%02X:%02X:%02X:%02X:%02X\n",(*eth).srcMac[0],(*eth).srcMac[1],(*eth).srcMac[2],(*eth).srcMac[3],(*eth).srcMac[4],(*eth).srcMac[5]);	
 	
 	return 0;
 }
 
 int print_Ip4(struct Ip4_header* iph)
 {
-	struct Ip4_header iph_;
-	memcpy(&iph_,iph,sizeof(iph_));
-
 	printf("src IP: ");
-	printf("%d.%d.%d.%d\n",iph_.src<<24>>24,iph_.src<<16>>24,iph_.src<<8>>24,iph_.src>>24);
+	printf("%d.%d.%d.%d\n",(*iph).src<<24>>24,(*iph).src<<16>>24,(*iph).src<<8>>24,(*iph).src>>24);
 
 	printf("dst IP: ");
-	printf("%d.%d.%d.%d\n",iph_.dst<<24>>24,iph_.dst<<16>>24,iph_.dst<<8>>24,iph_.dst>>24);
+	printf("%d.%d.%d.%d\n",(*iph).dst<<24>>24,(*iph).dst<<16>>24,(*iph).dst<<8>>24,(*iph).dst>>24);
 
 	return 0;
 }
 
 int print_Tcp(struct Tcp_header* tcph)
 {
-	struct Tcp_header tcph_;
-	memcpy(&tcph_,tcph,sizeof(&tcph_));
-	printf("src port: %d\n",tcph_.src_port[0]*256 + tcph_.src_port[1]);
-	printf("dst port: %d\n",tcph_.dst_port[0]*256 + tcph_.dst_port[1]);
+	printf("src port: %d\n",(*tcph).src_port[0]*256 + (*tcph).src_port[1]);
+	printf("dst port: %d\n",(*tcph).dst_port[0]*256 + (*tcph).dst_port[1]);
 	return 0;
 }
 
