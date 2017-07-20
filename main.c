@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	const u_char *packet;		/* The actual packet */
 	
 	/* Define the device */
-	if(argv >= 2){
+	if(argc >= 2){
 		dev = argv[1];
 	}
 	else{	//case: no input
