@@ -47,11 +47,13 @@ int main(int argc, char *argv[])
 				break;
 			case -1:
 				printf("error occurred\n");
+				pcap_close(handle);
 				return(2);
 				break;
 			case -2:
 				printf("end of file\n");
-				return(2);
+				pcap_close(handle);
+				return(0);
 				break;
 		}
 	}
